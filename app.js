@@ -58,17 +58,32 @@ function recieved_authentication(authentication_res, res, user_input, request_se
 		});
 	});
 }
+<<<<<<< HEAD
 /*
 function recieve_search(search_res){
+=======
+
+/*
+function recieved_search_object(search_res, res, user_input, search_sent_time){
+>>>>>>> 01674ea03cd06d7cdb1d5ff200903a682de5075d
 	search_res.setEncoding("utf8");
 	let body2 = "";
 	search_res.on("data", data => {body2 += data;});
 	search_res.on("end", () => {
 		let search_res_data = JSON.parse(body2);
 		console.log(search_res_data);
+<<<<<<< HEAD
 	});
 }
 */
+=======
+	
+	});
+}
+*/
+
+
+>>>>>>> 01674ea03cd06d7cdb1d5ff200903a682de5075d
 let server = http.createServer((req,res)=>{
 	if(req.url === '/'){
 		res.writeHead(200,{'Content-Type':'text/html'});
@@ -87,6 +102,7 @@ let server = http.createServer((req,res)=>{
 		});
 	} else if(req.url.includes('search')){
 		let user_input = url.parse(req.url, true).query;
+		console.log(user_input);
 		const authentication_req_url = 'https://accounts.spotify.com/api/token';
 		let request_sent_time = new Date();
 		let authentication_req = https.request(authentication_req_url, options, authentication_res => {
@@ -98,6 +114,25 @@ let server = http.createServer((req,res)=>{
 		authentication_req.write(post_data);
 		console.log("Requesting Token");
 		authentication_req.end();
+<<<<<<< HEAD
+=======
+
+		let artist_name = user_input.artist;
+		console.log(artist_name);
+
+		const search_req_url = 'https://api.spotify.com/v1/search';
+/*		let search_sent_time = new Date();
+		let search_req = https.request(search_req_url, search_res => {
+			recieved_search_object(search_req, res, user_input, search_sent_time);
+		});
+		search_req. on('error', (e) => {
+			console.error(e);
+		});
+		console.log("Requesting Searching Object");
+		search_req.end();
+*/		
+
+>>>>>>> 01674ea03cd06d7cdb1d5ff200903a682de5075d
 		
 	} else{
 		res.writeHead(404, {'Content-Type':'text/plain'});
