@@ -54,7 +54,7 @@ function recieved_authentication(authentication_res, res, user_input, request_se
 		console.log(search_url);
 		
 		let search_req = https.request(search_url, search_res => {
-			search_res.on("data", data => {console.log(data)});
+			search_res.on("data", data => {console.log(search_res)});
 		});
 	});
 }
