@@ -91,11 +91,7 @@ let server = http.createServer((req,res)=>{
 		});
 	} else if(req.url.includes('search')){
 		let user_input = url.parse(req.url, true).query;
-<<<<<<< HEAD
 		console.log(user_input);
-
-=======
->>>>>>> 826bde97c4adfcb06a5b2d9be76b0bcc4771c19e
 		const authentication_req_url = 'https://accounts.spotify.com/api/token';
 		let request_sent_time = new Date();
 		let authentication_req = https.request(authentication_req_url, options, authentication_res => {
