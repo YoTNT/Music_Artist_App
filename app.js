@@ -23,6 +23,7 @@ let options ={
 const server_address = 'localhost';
 const port = 3000;
 
+let search_url = '';
 let token = '';
 const endpoints = 'https://api.spotify.com/v1/search';
 
@@ -37,7 +38,7 @@ function recieved_authentication(authentication_res, res, user_input, request_se
 		let authentication_res_data = JSON.parse(body);
 		console.log(authentication_res_data);
 	
-
+		token = authentication_res_data.access_token;
 	
 //		create_cache(authentication_res_data);
 //		create_search_req(authentication_res_data, res, res, user_input, request_sent_time);
@@ -45,21 +46,29 @@ function recieved_authentication(authentication_res, res, user_input, request_se
 		let search_endpoints = endpoints;
 		let search_artist_name = user_input.artist.replace(' ', '%20');
 		let search_type = 'type=artist';
-		let search_authentication = 'access_token=' + authentication_res_data.access_token;
-		let search_url = search_endpoints + '?q=' +
+		let search_authentication = 'Authorization=Bearer%20' + authentication_res_data.access_token;
+		search_url = search_endpoints + '?q=' +
 						search_artist_name + '&' +
 						search_type + '&' +
 						search_authentication;
 		console.log(search_url);
-	
+		
 		let search_req = https.request(search_url, search_res => {
-			console.log(search_res);
+			search_res.on("data", data => {console.log(data)});
 		});
-	
 	});
 }
-
-
+/*
+function recieve_search(search_res){
+	search_res.setEncoding("utf8");
+	let body2 = "";
+	search_res.on("data", data => {body2 += data;});
+	search_res.on("end", () => {
+		let search_res_data = JSON.parse(body2);
+		console.log(search_res_data);
+	});
+}
+*/
 let server = http.createServer((req,res)=>{
 	if(req.url === '/'){
 		res.writeHead(200,{'Content-Type':'text/html'});
@@ -89,6 +98,7 @@ let server = http.createServer((req,res)=>{
 		authentication_req.write(post_data);
 		console.log("Requesting Token");
 		authentication_req.end();
+		
 	} else{
 		res.writeHead(404, {'Content-Type':'text/plain'});
 		res.write('404 Not Found\n');
