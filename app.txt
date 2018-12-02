@@ -27,7 +27,6 @@ let search_url = '';
 let token = '';
 const endpoints = 'https://api.spotify.com/v1/search';
 
-//let html_stream = fs.createReadStream('./html/search-form.html','utf8');
 let authentication_cache = './auth/authentication_res.json';
 
 let genres = '';
